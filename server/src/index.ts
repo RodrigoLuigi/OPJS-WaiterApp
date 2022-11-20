@@ -1,14 +1,16 @@
+import path from 'path';
+
 import express from 'express';
 import mongoose from 'mongoose';
 
 import { router } from './router';
 
-mongoose
-  .connect('mongodb+srv://digaor:2717476@cluster0.e6vlilv.mongodb.net/test')
+mongoose.connect('mongodb+srv://digaor:2717476@cluster0.e6vlilv.mongodb.net/test')
   .then(() => {
     const app = express();
     const port = 3000;
 
+    app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')));
     app.use(express.json());
     app.use(router);
 
@@ -17,3 +19,5 @@ mongoose
     });
   })
   .catch(() => console.log('error co conectar no mongodb'));
+
+
